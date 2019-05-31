@@ -49,7 +49,7 @@ main = do
     let c = obtenerElemArr a 0
     --let d = comparar "A" a 1--
     --let d = comparar b a 0 0 b--
-    return $ c
+    return a 
 
 --obtiene string del array--
 obtenerElemArr :: [String] -> Int -> String

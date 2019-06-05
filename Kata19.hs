@@ -15,7 +15,7 @@ main = do
     putStrLn "\n"
 
     putStrLn pala
-    maincomp pala palb a 0 pala
+    maincomp pala palb a 0 pala 0
     
     --return $ b--
 
@@ -46,8 +46,8 @@ compararEnLista pal1 arreglo = do
         then True
         else False
 
-maincomp :: String -> String -> [String] -> Int -> String -> IO String
-maincomp pal1 pal2 arreglo x org = do
+maincomp :: String -> String -> [String] -> Int -> String -> Int -> IO String
+maincomp pal1 pal2 arreglo x org cont = do
     let a1 = pal1
     if a1 == pal2
         then do
@@ -56,11 +56,11 @@ maincomp pal1 pal2 arreglo x org = do
             
         else do
             if x >= (length pal1)
-                then maincomp a1 pal2 arreglo 0 org
+                then maincomp a1 pal2 arreglo 0 org cont
                 else do
                     let compale = comparar pal1 pal2 x
                     if compale
-                        then maincomp a1 pal2 arreglo (x+1) org
+                        then maincomp a1 pal2 arreglo (x+1) org cont
                         else do
                             let c = pal1 !! x
                             let d = pal2 !! x
@@ -72,8 +72,11 @@ maincomp pal1 pal2 arreglo x org = do
                             if existe
                                 then do
                                     putStrLn new
-                                    maincomp new pal2 arreglo 0 org
-                                else maincomp a1 pal2 arreglo (x+1) org
+                                    maincomp new pal2 arreglo 0 org cont
+                                else do
+                                    if cont >= 200
+                                        then return "No hay palabra en el diccionario"
+                                        else maincomp a1 pal2 arreglo (x+1) org (cont +1)
                             {--print new
                             maincomp new pal2 arreglo x--}
 
